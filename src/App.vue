@@ -64,13 +64,16 @@ function itemToRoute(item) {
   </v-card>
 
   <v-main>
-    <v-container fluid>
+  <v-container fluid>
+    <!-- 新しいスロット構文を使用してrouter-viewをラップする -->
+    <router-view v-slot="{ Component }">
       <v-fade-transition>
-    <RouterView />
-  </v-fade-transition>
+        <!-- スロットから取得したComponentを動的コンポーネントとしてレンダリング -->
+        <component :is="Component" />
+      </v-fade-transition>
+    </router-view>
   </v-container>
-
-  </v-main>
+</v-main>
 </v-app>
 </template>
 
