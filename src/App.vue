@@ -44,7 +44,7 @@ function itemToRoute(item) {
       </v-tab>
 
       <v-btn to="/login">Login</v-btn>
-      <v-btn color = "red-darken-1">Signup</v-btn>
+      <v-btn to="/register"  color = "red-darken-1">Signup</v-btn>
     </v-tabs>
 
     <!-- <v-window v-model="tab">
