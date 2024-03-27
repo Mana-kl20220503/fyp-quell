@@ -3,8 +3,9 @@ import LoginView from '@/views/LoginView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import ProgressView from '@/views/ProgressView.vue'
 import CommunityView from '@/views/CommunityView.vue'
-import CalenderView from '@/views/CalenderView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import VapeLogView from '@/views/VapeLogView.vue'
+import TestDB from '@/views/TestDB.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,9 +34,9 @@ const router = createRouter({
       component: CommunityView 
     },
     {
-      path: '/calender',
-      name: 'calender',
-      component: CalenderView
+      path: '/VapeLog',
+      name: 'vapelog',
+      component: VapeLogView
     },
     {
       path: '/login',
@@ -46,6 +47,11 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: RegisterView
+    },
+    {
+      path: '/testdb',
+      name: 'testdb',
+      component: TestDB
     }
   ]
 })

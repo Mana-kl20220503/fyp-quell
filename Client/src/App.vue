@@ -1,23 +1,28 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-
+import { RouterLink, RouterView } from 'vue-router';
 import {ref} from 'vue';
 
 const tab = ref('Navigators');
 const items = ref([
-  'Dashboard', 'Craving Diary', 'Progress', 'Community', 'Calender',
+  // {name:'Dashboard', hasDropdown: true, dropdownItems: [{title: MyPage, route: '/'}]},
+  {name:'Craving Diary',hasDropdown: true, dropdownItems: [{ title: 'New Entry', route: '/craving-diary' }, ]},
+  {name:'Progress', hasDropdown: false, dropdownItems: []},
+  {name:'Community', hasDropdown: true, dropdownItems: [{ title: 'New Entry', route: '/community' }, {title: 'All Posts', route: '/community'}]},
+  {name:'Vape Log', hasDropdown: true, dropdownItems: [{ title: 'New Entry', route: '/vapelog' }, {title: 'All Posts', route: '/vape log'}]},
 ]);
 
-function itemToRoute(item) {
-  const routeMap = {
-    'Dashboard': '/',
-  'Craving Diary': '/craving-diary',
-  'Progress': '/progress',
-  'Community': '/community',
-  'Calender' : '/calender',
-  };
-  return routeMap[item];
-}
+
+// アイテムに対応するルートを取得する関数
+const itemToRoute = (item) => {
+  return items.value.find(x => x.name === item)?.route || '/';
+};
+
+// ドロップダウンアイテムのナビゲーション関数
+const navigateTo = (dropdownItem) => {
+  // ルーティングロジックをここに実装...
+  console.log(`Navigate to: ${dropdownItem.route}`);
+};
+
 </script>
 
 <template>
@@ -35,12 +40,39 @@ function itemToRoute(item) {
       color="basil"
       grow
     >
+    <!--Navigation Items-->
       <v-tab
-        v-for="item in items"
-        :key="item"
-        :to="itemToRoute(item)"
-      >
-        {{ item }}
+        v-for="(item,index) in items"
+        :key="item.name"
+        @click="tab = index"
+        >
+        <!-- Dropdown Menu if needed -->
+        <template v-if="item.hasDropdown">
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-bind="attrs" v-on="on">
+            {{ item.name }}
+          </v-btn>
+          </template>
+          <v-list>
+            <v-list-item
+            v-for="(dropdownItem, i) in item.dropdownItems"
+            :key="`dropdown-${item.name}-${i}`"
+            @click="navigateTo(dropdownItem)"
+          >
+          <v-list-item-title>{{ dropdownItem.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </template>
+
+      <!-- Regular Tab if no dropdown needed -->
+    <template v-else>
+      <v-btn :to="itemToRoute(item.name)">
+        {{ item.name }}
+      </v-btn>
+    </template>
+
       </v-tab>
 
       <v-btn to="/login">Login</v-btn>
