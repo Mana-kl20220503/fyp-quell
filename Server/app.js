@@ -31,11 +31,8 @@ app.get('/testdb', async (req, res) => {
 app.get('/printHi', async (req, res) => {
     
     console.log('Hi')
-
     res.send('OK')
 })
-
-
 
 server.listen(3000, () =>
   console.log(`

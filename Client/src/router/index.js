@@ -1,11 +1,11 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '@/views/LoginView.vue'
-import DashboardView from '@/views/DashboardView.vue'
-import ProgressView from '@/views/ProgressView.vue'
-import CommunityView from '@/views/CommunityView.vue'
-import RegisterView from '@/views/RegisterView.vue'
-import VapeLogView from '@/views/VapeLogView.vue'
-import TestDB from '@/views/TestDB.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import LoginView from '@/views/LoginView.vue';
+import DashboardView from '@/views/DashboardView.vue';
+import CommunityView from '@/views/CommunityView.vue';
+import RegisterView from '@/views/RegisterView.vue';
+import VapeLogView from '@/views/VapeLogView.vue';
+import TestDB from '@/views/TestDB.vue';
+import HealthInfoView from '@/views/HealthInfoView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,7 +13,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'dashboard',
-      component: DashboardView
+      component: DashboardView,
     },
     {
       path: '/craving-diary',
@@ -21,39 +21,39 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/CravingView.vue')
+      component: () => import('../views/CravingView.vue'),
     },
     {
-      path: '/progress',
-      name: 'progress',
-      component: ProgressView
+      path: '/healthinfo',
+      name: 'healthinfo',
+      component: HealthInfoView,
     },
     {
       path: '/community',
       name: 'community',
-      component: CommunityView 
+      component: CommunityView,
     },
     {
       path: '/VapeLog',
       name: 'vapelog',
-      component: VapeLogView
+      component: VapeLogView,
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
     },
     {
       path: '/register',
       name: 'register',
-      component: RegisterView
+      component: RegisterView,
     },
     {
       path: '/testdb',
       name: 'testdb',
-      component: TestDB
-    }
-  ]
-})
+      component: TestDB,
+    },
+  ],
+});
 
-export default router
+export default router;
