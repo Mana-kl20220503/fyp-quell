@@ -44,6 +44,8 @@ CREATE TABLE "Vape" (
     "price" DECIMAL(65,30) NOT NULL,
     "brand" TEXT NOT NULL,
     "productType" TEXT NOT NULL,
+    "nicotineContent" INTEGER NOT NULL,
+    "puffsCount" INTEGER NOT NULL,
 
     CONSTRAINT "Vape_pkey" PRIMARY KEY ("id")
 );
@@ -53,9 +55,7 @@ CREATE TABLE "PuffLog" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "puffTaken" INTEGER NOT NULL,
-    "nicotine" INTEGER NOT NULL,
-    "productType" TEXT NOT NULL,
+    "nicotineIntake" DECIMAL(65,30) NOT NULL,
     "vapeId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
 

@@ -58,15 +58,15 @@ async function main() {
       price: 49.99,
       brand: 'VapeBrand',
       productType: 'Disposable',
+      nicotineContent: 50,
+      puffsCount: 500,
     },
   });
 
   // Seed PuffLogs
   await prisma.puffLog.create({
     data: {
-      puffTaken: 5,
-      nicotine: 3,
-      productType: 'Disposable',
+      nicotineIntake: vape.nicotineContent / vape.puffsCount,
       vapeId: vape.id,
       userId: userAlice.id,
     },
@@ -77,7 +77,7 @@ async function main() {
     data: {
       totalCost: 49.99,
       quantity: 1,
-      userId: userBob.id,
+      userId: userAlice.id,
     },
   });
 

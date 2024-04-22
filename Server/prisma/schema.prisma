@@ -55,6 +55,8 @@ model Vape{
   price Decimal
   brand String
   productType String
+  nicotineContent Int
+  puffsCount Int
   puffLog PuffLog[]
 }
 
@@ -62,9 +64,7 @@ model PuffLog{
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  puffTaken Int
-  nicotine Int
-  productType String
+  nicotineIntake Decimal
   vape Vape @relation(fields:[vapeId], references:[id])
   vapeId Int
   user User @relation(fields:[userId], references:[id])
