@@ -2,30 +2,23 @@
   <header class="header">
     <h1 class="title">VapeQuell</h1>
     <nav class="navbar">
-      <!-- navigation links here -->
-      <a href="/dashboard" class="nav-link">Dashboard</a>
-      <a href="/craving-diary" class="nav-link">Craving Diary</a>
-      <a href="/vapelog" class="nav-link">Vape Log</a>
-      <a href="/community" class="nav-link">Community</a>
-      <a href="/healthinfo" class="nav-link">Health Info</a>
+      <router-link to="/dashboard" class="nav-link">Dashboard</router-link>
+      <router-link to="/craving-diary" class="nav-link">
+        Craving Diary
+      </router-link>
+      <router-link to="/vapelog" class="nav-link">Vape Log</router-link>
+      <router-link to="/community" class="nav-link">Community</router-link>
+      <router-link to="/healthinfo" class="nav-link">Health Info</router-link>
       <button class="logout-button">Log out</button>
     </nav>
   </header>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
+import { RouterLink } from 'vue-router';
 
-export default {
-  setup() {
-    const model = ref(null); // if you have a default value, set it here
-
-    // Setup function returns all the reactive data to the template
-    return {
-      model,
-    };
-  },
-};
+const model = ref(null);
 </script>
 
 <style scoped>
@@ -41,11 +34,10 @@ export default {
 }
 
 .navbar {
-  /* Navigation bar styling */
   display: flex;
   align-items: center;
   justify-content: center;
-  /* padding: 1rem; */
+
   font-size: 16px;
 }
 
@@ -65,29 +57,26 @@ export default {
 }
 
 .logout-button {
-  background-color: #fff; /* Adjust the color to match your exact shade */
-  color: #000; /* Text color */
-  padding: 10px 20px; /* Padding inside the button */
-  border: none; /* No border */
-  border-radius: 6px; /* Rounded corners */
-  font-size: 16px; /* Text size */
-  font-weight: bold; /* Bold text */
-  box-shadow: 4px 4px 0px #000000; /* Box shadow to create the 'border' effect */
-  cursor: pointer; /* Mouse pointer on hover */
-  outline: none; /* Remove outline on focus */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
+  background-color: #fff;
+  color: #000;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 4px 4px 0px #000000;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s;
 }
 
 .logout-button:hover {
-  background-color: #717d96; /* Darker shade on hover */
+  background-color: #717d96;
 }
 
 .logout-button:active {
-  box-shadow: 1px 1px 0px #000000; /* Smaller shadow for pressed effect */
-  transform: translate(
-    2px,
-    2px
-  ); /* Slightly move the button down and to the right */
+  box-shadow: 1px 1px 0px #000000;
+  transform: translate(2px, 2px);
 }
 
 .title {
