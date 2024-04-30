@@ -1,11 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '@/views/LoginView.vue';
-import DashboardView from '@/views/DashboardView.vue';
-import CommunityView from '@/views/CommunityView.vue';
 import RegisterView from '@/views/RegisterView.vue';
-import VapeLogView from '@/views/VapeLogView.vue';
 import TestDB from '@/views/TestDB.vue';
-import HealthInfoView from '@/views/HealthInfoView.vue';
+
+// Dashboard
+import DashboardView from '@/views/Dashboard/DashboardView.vue';
+import MyPageView from '@/views/Dashboard/MyPageView.vue';
+
+// Community
+import CommunityView from '@/views/Community/CommunityView.vue';
+import NewPostView from '@/views/Community/NewPostView.vue';
+
+// CravingDiary
+import CravingView from '@/views/CravingDiary/CravingView.vue';
+import NewDiaryView from '@/views/CravingDiary/NewDiaryView.vue';
+
+// HealthInfo
+import HealthInfoView from '@/views/HealthInfo/HealthInfoView.vue';
+import ArticlePageView1 from '@/views/HealthInfo/ArticlePageView1.vue';
+import ArticlePageView2 from '@/views/HealthInfo/ArticlePageView2.vue';
+import ArticlePageView3 from '@/views/HealthInfo/ArticlePageView3.vue';
+
+// VapeLog
+import VapeLogView from '@/views/VapeLog/VapeLogView.vue';
+import NewPuffLogView from '@/views/VapeLog/NewPuffLog.vue';
+import TodayLogView from '@/views/VapeLog/TodayLogView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,27 +35,64 @@ const router = createRouter({
       component: DashboardView,
     },
     {
-      path: '/craving-diary',
-      name: 'craving-diary',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/CravingView.vue'),
+      path: '/dashboard/my-page',
+      name: 'mypage',
+      component: MyPageView,
     },
     {
-      path: '/healthinfo',
-      name: 'healthinfo',
-      component: HealthInfoView,
-    },
-    {
-      path: '/community',
+      path: '/communities',
       name: 'community',
       component: CommunityView,
     },
     {
-      path: '/VapeLog',
+      path: '/communities/new',
+      name: 'newpost',
+      component: NewPostView,
+    },
+    {
+      path: '/diary/all',
+      name: 'diary',
+      component: CravingView,
+    },
+    {
+      path: '/diary/new',
+      name: 'newdiary',
+      component: NewDiaryView,
+    },
+    {
+      path: '/health',
+      name: 'healthinfo',
+      component: HealthInfoView,
+    },
+    {
+      path: '/health/articles/1',
+      name: 'article1',
+      component: ArticlePageView1,
+    },
+    {
+      path: '/health/articles/2',
+      name: 'article2',
+      component: ArticlePageView2,
+    },
+    {
+      path: '/health/articles/3',
+      name: 'article3',
+      component: ArticlePageView3,
+    },
+    {
+      path: '/vapelog',
       name: 'vapelog',
       component: VapeLogView,
+    },
+    {
+      path: '/vapelog/new-puff',
+      name: 'newpufflog',
+      component: NewPuffLogView,
+    },
+    {
+      path: '/vapelog/new-vape',
+      name: 'todaylog',
+      component: TodayLogView,
     },
     {
       path: '/login',

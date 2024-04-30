@@ -2,13 +2,23 @@
   <header class="header">
     <h1 class="title">VapeQuell</h1>
     <nav class="navbar">
-      <router-link to="/dashboard" class="nav-link">Dashboard</router-link>
-      <router-link to="/craving-diary" class="nav-link">
-        Craving Diary
-      </router-link>
-      <router-link to="/vapelog" class="nav-link">Vape Log</router-link>
-      <router-link to="/community" class="nav-link">Community</router-link>
-      <router-link to="/healthinfo" class="nav-link">Health Info</router-link>
+      <ul class="flex gap-4">
+        <li>
+          <MenuDropDown :items="dashboardLinks" />
+        </li>
+        <li>
+          <MenuDropDown :items="diaryLinks" />
+        </li>
+        <li>
+          <MenuDropDown :items="vapeLogLinks" />
+        </li>
+        <li>
+          <MenuDropDown :items="communityLinks" />
+        </li>
+        <li>
+          <MenuDropDown :items="healthInfoLinks" />
+        </li>
+      </ul>
       <button class="logout-button">Log out</button>
     </nav>
   </header>
@@ -17,8 +27,47 @@
 <script setup>
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
+import MenuDropDown from './MenuDropDown.vue';
 
 const model = ref(null);
+
+const dashboardLinks = ref({
+  title: 'Dashboard',
+  links: [
+    { linkTitle: 'Dashboard', href: '/' },
+    { linkTitle: 'My Page', href: '/dashboard/my-page' },
+  ],
+});
+
+const diaryLinks = ref({
+  title: 'Craving Diaries',
+  links: [
+    { linkTitle: 'All Diaries', href: '/diary/all' },
+    { linkTitle: 'New Diary', href: '/diary/new' },
+  ],
+});
+
+const vapeLogLinks = ref({
+  title: 'Vape Log',
+  links: [
+    { linkTitle: "Today's Log", href: '/vapelog' },
+    { linkTitle: 'New Puff Log', href: '/vapelog/new-puff' },
+    { linkTitle: 'New Vape Log', href: '/vapelog/new-vape' },
+  ],
+});
+
+const communityLinks = ref({
+  title: 'Communities',
+  links: [
+    { linkTitle: 'All Posts', href: '/communities' },
+    { linkTitle: 'New Post', href: '/communities/new' },
+  ],
+});
+
+const healthInfoLinks = ref({
+  title: 'Health Info',
+  links: [{ linkTitle: 'All', href: '/health' }],
+});
 </script>
 
 <style scoped>
@@ -29,7 +78,6 @@ const model = ref(null);
   background-size: cover;
   width: 100%;
   height: 150px;
-
   color: #fff;
 }
 
