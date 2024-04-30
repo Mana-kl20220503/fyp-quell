@@ -17,7 +17,6 @@ const rules = {
 };
 
 const visible = ref(false);
-
 const isLoading = ref(false);
 
 function submit() {
@@ -45,76 +44,79 @@ function submit() {
 </script>
 
 <template>
-  <div class="logincontent">
-    <v-card class="pa-4 mx-auto" width="300">
-      <div class="title">
-        <v-card-title class="text-center">Log in Here</v-card-title>
-      </div>
-      <v-card-item>
-        <v-form @submit.prevent="submit">
-          <v-text-field
-            variant="solo"
-            prepend-inner-icon="mdi-email"
+  <div class="flex justify-center items-center h-screen bg-gray-100 px-6">
+    <div class="w-full max-w-md">
+      <h3 class="font-ultra text-center text-2xl mb-6">Log in Here</h3>
+      <form
+        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        @submit.prevent="submit"
+      >
+        <div class="mb-4">
+          <label class="block text-sm font-bold mb-2" for="email">
+            Email
+          </label>
+          <input
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-custom-green placeholder-white shadow-custom_login"
+            id="email"
+            type="email"
+            placeholder="Enter your email"
             v-model="form.email"
-            :rules="[rules.required, rules.email]"
-            label="Email"
-            bg-color="#6CB694"
+          />
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-bold mb-2" for="password">
+            Password
+          </label>
+          <div class="relative">
+            <input
+              :type="visible ? 'text' : 'password'"
+              class="appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-custom-yellow placeholder-gray shadow-custom_login"
+              id="password"
+              placeholder="Enter your password"
+              v-model="form.password"
+            />
+            <button
+              type="button"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+              @click="visible = !visible"
+            >
+              <span v-show="visible">Hide</span>
+              <span v-show="!visible">Show</span>
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input
+              id="remember"
+              type="checkbox"
+              v-model="form.remember"
+              class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            />
+            <label for="remember" class="ml-2 block text-sm text-gray-900">
+              Remember me
+            </label>
+          </div>
+          <button
+            class="bg-custom-red hover:bg-custom-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-custom_login active:shadow-custom_active"
+            type="submit"
           >
-          </v-text-field>
-
-          <v-text-field
-            bg-color="#F8D040"
-            :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-            :type="visible ? 'text' : 'password'"
-            variant="solo"
-            prepend-inner-icon="mdi-lock"
-            v-model="form.password"
-            :rules="[rules.required]"
-            label="Password"
-            @click:append-inner="visible = !visible"
-          ></v-text-field>
-          <v-checkbox
-            v-model="form.remember"
-            color="red"
-            label="Remember me"
-            hide-details
-          ></v-checkbox>
-          <v-btn color="#DB4A2B" class="mt-2 mb-2" type="submit" block>
-            <v-progress-circular
-              v-if="isLoading"
-              color="white"
-              indeterminate
-              size="small"
-            ></v-progress-circular>
-            <span v-else>Log in</span>
-          </v-btn>
-          <v-card-action>
-            <v-card-text class="text-center">
-              <a
-                class="text-blue text-decoration-none"
-                href="/register"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
-              </a>
-            </v-card-text>
-          </v-card-action>
-        </v-form>
-      </v-card-item>
-    </v-card>
+            Log in
+          </button>
+        </div>
+      </form>
+      <p class="text-center text-sm text-gray-600">
+        Don't have an account?
+        <a
+          href="/register"
+          class="text-blue-500 hover:text-blue-800"
+          rel="noopener noreferrer"
+          target="_blank"
+          >Sign up now</a
+        >
+      </p>
+    </div>
   </div>
 </template>
 
-<style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Ultra&family=Work+Sans:wght@400;700&display=swap');
-
-.logincontent {
-  padding: 100px 0 150px 0;
-  font-family: 'Work Sans', sans-serif;
-}
-
-.title {
-  font-family: 'Ultra', serif;
-}
-</style>
+<style></style>
