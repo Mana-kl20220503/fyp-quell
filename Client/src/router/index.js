@@ -24,7 +24,8 @@ import ArticlePageView3 from '@/views/HealthInfo/ArticlePageView3.vue';
 // VapeLog
 import VapeLogView from '@/views/VapeLog/VapeLogView.vue';
 import NewPuffLogView from '@/views/VapeLog/NewPuffLog.vue';
-import TodayLogView from '@/views/VapeLog/TodayLogView.vue';
+import TodayLogView from '@/views/VapeLog/NewVapeLog.vue';
+import NewVapeLog from '@/views/VapeLog/NewVapeLog.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -92,7 +93,7 @@ const router = createRouter({
     {
       path: '/vapelog/new-vape',
       name: 'todaylog',
-      component: TodayLogView,
+      component: NewVapeLog,
     },
     {
       path: '/login',
