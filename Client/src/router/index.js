@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import TestDB from '@/views/TestDB.vue';
+import About from '@/views/About.vue';
 
 // Dashboard
 import DashboardView from '@/views/Dashboard/DashboardView.vue';
@@ -109,6 +110,11 @@ const router = createRouter({
       path: '/testdb',
       name: 'testdb',
       component: TestDB,
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About,
     },
   ],
 });
