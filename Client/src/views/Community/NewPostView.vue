@@ -1,15 +1,24 @@
 <template>
-  <div class="container mx-auto px-5 py-8">
-    <h2 class="text-center font-ultra text-xl">New Post</h2>
-    <p class="text-center font-worksans text-gray-600">
-      You are not alone in the quitting vaping journey :)
-    </p>
+  <div class="min-h-screen bg-white flex flex-col items-center justify-center">
+    <div class="text-center">
+      <h1 class="text-xl mb-4 font-ultra">New Post</h1>
+      <p class="mb-6 font-worksans">
+        You are not alone in the quitting vaping journey:)
+      </p>
 
-    <div class="py-4 flex flex-col items-center">
-      <label class="font-worksans">What do you wanna share?</label>
-      <input type="text" class="block border border-black rounded-lg" />
+      <div>
+        <label class="block text-lg font-medium mb-2 font-worksans"
+          >What do you wanna share?</label
+        >
+        <textarea
+          v-model="feeling"
+          rows="3"
+          class="border border-gray-300 rounded-lg w-96 p-2"
+        ></textarea>
+      </div>
       <button
-        class="mt-4 px-2 rounded-md border border-black bg-custom-red text-white"
+        @click="submitForm"
+        class="mt-4 bg-custom-red hover:bg-custom-blue text-white font-bold py-2 px-4 rounded"
       >
         Submit
       </button>
@@ -17,6 +26,14 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+
+const feeling = ref('');
+
+function submitForm() {
+  console.log('Feeling:', feeling.value);
+}
+</script>
 
 <style></style>
