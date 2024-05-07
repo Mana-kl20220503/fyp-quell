@@ -45,7 +45,7 @@
           :key="purchase.id"
           class="bg-white p-4 my-2 rounded shadow-md flex justify-between items-center"
         >
-          <div>
+          <div class="flex flex-justify">
             <p>{{ purchase.date }}</p>
             <p>Type of Vape: {{ purchase.type }}</p>
             <p>Vape Brand: {{ purchase.brand }}</p>

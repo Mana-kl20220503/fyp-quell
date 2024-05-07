@@ -28,25 +28,25 @@
         v-if="isAllZero"
         src="/assets/cracker.png"
         alt="Cracker Left"
-        class="w-12 h-auto"
+        class="w-20 h-auto"
       />
       <div class="flex flex-justify">
         <div
           class="bg-custom-red text-white p-4 rounded-lg shadow-md mx-2 border border-black custom-box"
         >
-          <p>Puffs Taken:</p>
+          <p class="font-bold">Puffs Taken:</p>
           <div class="text-5xl">{{ vapeLog.puffs }} 🚬</div>
         </div>
         <div
           class="bg-custom-blue text-white p-4 rounded-lg shadow-md mx-2 border border-black custom-box"
         >
-          <p>Nicotine Intake:</p>
+          <p class="font-bold">Nicotine Intake:</p>
           <div class="text-5xl">{{ vapeLog.nicotine }} mg</div>
         </div>
         <div
           class="bg-custom-yellow text-white p-4 rounded-lg shadow-md mx-2 border border-black custom-box"
         >
-          <p>Money Spent:</p>
+          <p class="font-bold">Money Spent:</p>
           <div class="text-5xl">£{{ vapeLog.money }}</div>
         </div>
       </div>
@@ -54,7 +54,7 @@
         v-if="isAllZero"
         src="/assets/cracker_right.png"
         alt="Cracker Right"
-        class="w-12 h-auto"
+        class="w-20 h-auto"
       />
     </div>
   </div>
@@ -69,7 +69,7 @@
       <img
         src="/assets/vape1.jpg"
         alt="Health Info"
-        class="mx-auto w-20 h-auto"
+        class="mx-auto w-20 h-auto custom-img"
       />
       <p>
         Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -112,7 +112,12 @@ function goToArticle() {
 
 <style scoped>
 .custom-box {
-  width: 150px; /* Set width */
+  width: 160px; /* Set width */
   height: 170px; /* Set height */
+}
+
+.custom-img {
+  width: 160px; /* Set width */
+  height: auto;
 }
 </style>
