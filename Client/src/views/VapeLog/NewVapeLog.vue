@@ -19,15 +19,11 @@
       </div>
 
       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-          Type
-        </label>
+        <label class="block text-gray-700 text-sm font-bold mb-2"> Type </label>
         <div v-if="selectedBrand">
           <pre>{{ selectedBrand.productType }}</pre>
         </div>
-        <div v-else>
-          Please select a brand ...
-        </div>
+        <div v-else>Please select a brand ...</div>
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -36,9 +32,7 @@
         <div v-if="selectedBrand">
           <pre>{{ selectedBrand.price }}</pre>
         </div>
-        <div v-else>
-          Please select a brand ...
-        </div>
+        <div v-else>Please select a brand ...</div>
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -80,23 +74,23 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import axios from 'axios'
-import useAuthStore from '@/stores/auth'
+import { onMounted, ref } from 'vue';
+import axios from 'axios';
+import useAuthStore from '@/stores/auth';
 
-const authStore = useAuthStore()
-const itemCount = ref(1)
-const isAware = ref(false)
-const isEquivalent = ref(false)
-const vapes = ref([])
-const selectedBrand = ref(null)
+const authStore = useAuthStore();
+const itemCount = ref(1);
+const isAware = ref(false);
+const isEquivalent = ref(false);
+const vapes = ref([]);
+const selectedBrand = ref(null);
 
 async function submitForm() {
   const data = {
     vapeId: selectedBrand.value.id,
     quantity: itemCount.value,
-  }
-  console.log('data', data)
+  };
+  console.log('data', data);
 
   const response = await axios({
     method: 'post',
@@ -108,24 +102,37 @@ async function submitForm() {
       vapeId: selectedBrand.value.id,
       quantity: itemCount.value,
     },
-  })
+  });
 
-  console.log('response add purchase', response)
+  await getProfile();
+  console.log('response add purchase', response);
+}
+
+async function getProfile() {
+  const response = await axios({
+    method: 'get',
+    url: 'http://localhost:3000/getProfile',
+    headers: {
+      Authorization: `Bearer ${authStore.token}`,
+    },
+  });
+  authStore.user = response.data;
+  console.log('response profile', response);
 }
 
 async function getVapes() {
   const response = await axios({
     method: 'get',
     url: 'http://localhost:3000/getVapes',
-  })
+  });
 
-  vapes.value = response.data
-  console.log('vapes.value', vapes.value)
+  vapes.value = response.data;
+  console.log('vapes.value', vapes.value);
 }
 
 onMounted(() => {
-  getVapes()
-})
+  getVapes();
+});
 </script>
 
 <style></style>

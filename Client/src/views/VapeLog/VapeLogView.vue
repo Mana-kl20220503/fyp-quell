@@ -20,10 +20,9 @@
           <h2 class="font-bold">Nicotine Intake</h2>
           <p class="py-4 text-5xl">{{ nicotineIntake }} mg</p>
           <p>
-            Nicotine cause a lot of health issues.
-            <a href="/health" class="underline text-yellow-200"
-              >Learn more -- Click</a
-            >
+            <a href="/health" class="underline text-yellow-200">
+              Learn more -- Click
+            </a>
           </p>
         </div>
         <div
@@ -79,6 +78,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import useAuthStore from '@/stores/auth';
+const authStore = useAuthStore();
 import Chart from 'chart.js/auto';
 
 const totalPuffs = ref(0);
@@ -93,16 +94,6 @@ const whatYouCouldBuy = computed(() => {
     return 'some books';
   }
 });
-
-// Fetch data from backend and calculate the totals
-// Example:
-// fetch('/api/total-vape-log')
-//   .then(response => response.json())
-//   .then(data => {
-//     totalPuffs.value = data.totalPuffs;
-//     nicotineIntake.value = data.nicotineIntake;
-//     moneySpent.value = data.moneySpent;
-//   });
 
 const purchases = ref([
   {
@@ -133,6 +124,15 @@ function confirmPurchase(purchase) {
   console.log('Confirming', purchase);
   // Add confirm logic or API call to confirm the purchase
 }
+
+function init() {
+  moneySpent.value = authStore.user.purchaseLog.reduce((acc, item) => {
+    return acc + parseInt(item.totalCost);
+  }, 0);
+}
+onMounted(() => {
+  init();
+});
 
 onMounted(() => {
   const ctx = document.getElementById('myChart');
