@@ -5,44 +5,6 @@
     <form @submit.prevent="submitForm" class="w-full max-w-lg">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2">
-          What type of vape did you buy?
-        </label>
-        <div>
-          <label class="flex items-center mb-2">
-            <input
-              type="radio"
-              name="vapeType"
-              v-model="vapeType"
-              value="Disposable Vape"
-              class="mr-2"
-            />
-            Disposable Vape
-          </label>
-          <label class="flex items-center mb-2">
-            <input
-              type="radio"
-              name="vapeType"
-              v-model="vapeType"
-              value="Refillable Vape"
-              class="mr-2"
-            />
-            Refillable Vape
-          </label>
-          <label class="flex items-center mb-2">
-            <input
-              type="radio"
-              name="vapeType"
-              v-model="vapeType"
-              value="Pod/e-liquid"
-              class="mr-2"
-            />
-            Pod/e-liquid
-          </label>
-        </div>
-      </div>
-
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2">
           Which brand did you buy?
         </label>
         <select
@@ -50,12 +12,34 @@
           class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
         >
           <option disabled value="">Select</option>
-          <option v-for="brand in brands" :key="brand.id" :value="brand.name">
-            {{ brand.name }}
+          <option v-for="brand in vapes" :key="brand.id" :value="brand">
+            {{ brand.brand }}
           </option>
         </select>
       </div>
 
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Type
+        </label>
+        <div v-if="selectedBrand">
+          <pre>{{ selectedBrand.productType }}</pre>
+        </div>
+        <div v-else>
+          Please select a brand ...
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Price
+        </label>
+        <div v-if="selectedBrand">
+          <pre>{{ selectedBrand.price }}</pre>
+        </div>
+        <div v-else>
+          Please select a brand ...
+        </div>
+      </div>
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2">
           How many items did you buy?
@@ -68,21 +52,11 @@
       </div>
 
       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-          How much was it (per 1 item)?
-        </label>
-        <input
-          type="number"
-          v-model="itemPrice"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        />
-      </div>
-
-      <div class="mb-4">
         <label class="inline-flex items-center">
           <input type="checkbox" v-model="isAware" class="mr-2" />
-          Are you aware that vape brand name contains {{ nicotineContent }}mg/ml
-          of nicotine?
+          Are you aware that vape brand name contains
+          {{ selectedBrand ? selectedBrand.nicotineContent : 0 }}mg/ml of
+          nicotine?
         </label>
       </div>
 
@@ -90,7 +64,8 @@
         <label class="inline-flex items-center">
           <input type="checkbox" v-model="isEquivalent" class="mr-2" />
           Also is it the equivalent of smoking up to
-          {{ cigaretteEquivalent }} cigarettes?
+          {{ selectedBrand ? selectedBrand.nicotineContent / 10 : 0 }}
+          cigarettes?
         </label>
       </div>
 
@@ -105,39 +80,52 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+import useAuthStore from '@/stores/auth'
 
-const vapeType = ref('');
-const selectedBrand = ref('');
-const itemCount = ref(0);
-const itemPrice = ref(0);
-const nicotineContent = ref(0);
-const cigaretteEquivalent = ref(0);
-const isAware = ref(false);
-const isEquivalent = ref(false);
+const authStore = useAuthStore()
+const itemCount = ref(1)
+const isAware = ref(false)
+const isEquivalent = ref(false)
+const vapes = ref([])
+const selectedBrand = ref(null)
 
-const brands = ref([
-  { id: 1, name: 'ELFBAR', nicotine: 20, cigarettes: 20 },
-  { id: 2, name: 'Lost Mary', nicotine: 15, cigarettes: 15 },
-  // Add other brands here
-]);
-
-watch(selectedBrand, (newBrand) => {
-  const brand = brands.value.find((b) => b.name === newBrand);
-  if (brand) {
-    nicotineContent.value = brand.nicotine;
-    cigaretteEquivalent.value = brand.cigarettes;
+async function submitForm() {
+  const data = {
+    vapeId: selectedBrand.value.id,
+    quantity: itemCount.value,
   }
-});
+  console.log('data', data)
 
-function submitForm() {
-  alert(
-    `Submitting: ${selectedBrand.value} with ${itemCount.value} items at ${itemPrice.value} each.`
-  );
-  // Here, you would typically send a request to your backend to save the new vape log
+  const response = await axios({
+    method: 'post',
+    url: 'http://localhost:3000/addPurchaseLog',
+    headers: {
+      Authorization: `Bearer ${authStore.token}`,
+    },
+    data: {
+      vapeId: selectedBrand.value.id,
+      quantity: itemCount.value,
+    },
+  })
+
+  console.log('response add purchase', response)
 }
+
+async function getVapes() {
+  const response = await axios({
+    method: 'get',
+    url: 'http://localhost:3000/getVapes',
+  })
+
+  vapes.value = response.data
+  console.log('vapes.value', vapes.value)
+}
+
+onMounted(() => {
+  getVapes()
+})
 </script>
 
-<style>
-/* Tailwind CSS is included */
-</style>
+<style></style>

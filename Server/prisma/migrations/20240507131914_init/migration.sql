@@ -70,6 +70,7 @@ CREATE TABLE "PurchaseLog" (
     "totalCost" DECIMAL(65,30) NOT NULL,
     "quantity" INTEGER NOT NULL DEFAULT 0,
     "userId" INTEGER NOT NULL,
+    "vapeId" INTEGER NOT NULL,
 
     CONSTRAINT "PurchaseLog_pkey" PRIMARY KEY ("id")
 );
@@ -94,3 +95,6 @@ ALTER TABLE "PuffLog" ADD CONSTRAINT "PuffLog_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "PurchaseLog" ADD CONSTRAINT "PurchaseLog_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PurchaseLog" ADD CONSTRAINT "PurchaseLog_vapeId_fkey" FOREIGN KEY ("vapeId") REFERENCES "Vape"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

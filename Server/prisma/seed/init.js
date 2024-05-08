@@ -1,14 +1,19 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcryptjs'
+const prisma = new PrismaClient()
 
 async function main() {
   // Seed Users
+
+  var salt = bcrypt.genSaltSync(10)
+  var hash = bcrypt.hashSync('qwe123', salt)
+
   const userAlice = await prisma.user.upsert({
     where: { email: 'alice@example.com' },
     update: {},
     create: {
       email: 'alice@example.com',
-      password: 'aliceSecurePassword',
+      password: hash,
       profile: {
         create: {
           reasonToQuit: 'Health reasons',
@@ -17,14 +22,14 @@ async function main() {
         },
       },
     },
-  });
+  })
 
   const userBob = await prisma.user.upsert({
     where: { email: 'bob@example.com' },
     update: {},
     create: {
       email: 'bob@example.com',
-      password: 'bobSecurePassword',
+      password: hash,
       profile: {
         create: {
           reasonToQuit: 'Costly habit',
@@ -33,7 +38,7 @@ async function main() {
         },
       },
     },
-  });
+  })
 
   // Seed Posts
   await prisma.post.create({
@@ -42,7 +47,7 @@ async function main() {
       isPublic: true,
       authorId: userAlice.id,
     },
-  });
+  })
 
   await prisma.post.create({
     data: {
@@ -50,7 +55,7 @@ async function main() {
       isPublic: true,
       authorId: userBob.id,
     },
-  });
+  })
 
   // Seed Vapes
   const vape = await prisma.vape.create({
@@ -61,7 +66,34 @@ async function main() {
       nicotineContent: 50,
       puffsCount: 500,
     },
-  });
+  })
+  const vape2 = await prisma.vape.create({
+    data: {
+      price: 65,
+      brand: 'Lost Mary',
+      productType: 'Vape Kit',
+      nicotineContent: 70,
+      puffsCount: 700,
+    },
+  })
+  const vape3 = await prisma.vape.create({
+    data: {
+      price: 15,
+      brand: 'ELFBAR',
+      productType: 'Pod',
+      nicotineContent: 25,
+      puffsCount: 250,
+    },
+  })
+  const vape4 = await prisma.vape.create({
+    data: {
+      price: 20,
+      brand: 'ELUX',
+      productType: 'Pod',
+      nicotineContent: 18,
+      puffsCount: 180,
+    },
+  })
 
   // Seed PuffLogs
   await prisma.puffLog.create({
@@ -70,26 +102,35 @@ async function main() {
       vapeId: vape.id,
       userId: userAlice.id,
     },
-  });
+  })
 
   // Seed PurchaseLogs
   await prisma.purchaseLog.create({
     data: {
-      totalCost: 49.99,
+      totalCost: 1 * vape.price,
       quantity: 1,
-      userId: userAlice.id,
+      user: {
+        connect: {
+          id: userAlice.id,
+        },
+      },
+      vape: {
+        connect: {
+          id: vape.id,
+        },
+      },
     },
-  });
+  })
 
-  console.log('Seed data created!');
+  console.log('Seed data created!')
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect();
+    await prisma.$disconnect()
   })
   .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })

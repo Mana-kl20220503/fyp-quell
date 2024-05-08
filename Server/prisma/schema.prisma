@@ -58,6 +58,7 @@ model Vape{
   nicotineContent Int
   puffsCount Int
   puffLog PuffLog[]
+  purchaseLog PurchaseLog[]
 }
 
 model PuffLog{
@@ -79,6 +80,7 @@ model PurchaseLog{
   quantity Int @default(0)
   user User @relation(fields:[userId], references:[id])
   userId Int
+  vape Vape @relation(fields:[vapeId], references:[id])
+  vapeId Int
 }
 
-// Question mark (?) means nullable

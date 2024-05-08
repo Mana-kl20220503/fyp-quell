@@ -80,34 +80,75 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import useAuthStore from '@/stores/auth'
+import axios from 'axios'
 
 const user = ref({
   name: 'User Name',
   profileImage: '/assets/User1.png',
   reasonToQuit: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-});
+})
+
+const authStore = useAuthStore()
 
 const vapeLog = ref({
   puffs: 0,
   nicotine: 0,
   money: 0,
-});
+})
 
 const isAllZero = computed(() => {
   return (
     vapeLog.value.puffs === 0 &&
     vapeLog.value.nicotine === 0 &&
     vapeLog.value.money === 0
-  );
-});
+  )
+})
 
-const router = useRouter();
+const router = useRouter()
 
 function goToArticle() {
-  router.push('/health/article/1');
+  router.push('/health/article/1')
 }
+
+async function init() {
+  function formatDate(date) {
+    const d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear()
+
+    return [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-')
+  }
+
+  try {
+    const startDate = new Date()
+    const endDate = new Date()
+    endDate.setDate(startDate.getDate() + 1)
+
+    const response = await axios({
+      method: 'get',
+      url: 'http://localhost:3000/getTodayLogs',
+      headers: {
+        Authorization: `Bearer ${authStore.token}`,
+      },
+      params: {
+        startDate: formatDate(startDate),
+        endDate: formatDate(endDate),
+      },
+    })
+
+    console.log('response from dashboard', response)
+  } catch (error) {
+    console.error('Error fetching logs:', error)
+  }
+}
+
+onMounted(() => {
+  init()
+})
 </script>
 
 <style scoped>

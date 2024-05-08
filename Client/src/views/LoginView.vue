@@ -1,5 +1,11 @@
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
+import useAuthStore from '@/stores/auth';
+import { useRouter, RouterLink } from 'vue-router';
+
+const authStore = useAuthStore();
+const router = useRouter();
 
 const form = ref({
   email: '',
@@ -19,7 +25,11 @@ const rules = {
 const visible = ref(false);
 const isLoading = ref(false);
 
-function submit() {
+async function submit() {
+  const data = {
+    email: form.value.email,
+    password: form.value.password,
+  };
   let isValid = true;
 
   if (form.value.email === '') {
@@ -36,10 +46,37 @@ function submit() {
 
   isLoading.value = true;
 
-  setTimeout(() => {
-    isLoading.value = false;
-    alert(JSON.stringify(form.value));
-  }, 3000);
+  const response = await axios({
+    method: 'post',
+    url: 'http://localhost:3000/api/auth/login',
+    data: {
+      email: form.value.email,
+      password: form.value.password,
+    },
+  });
+
+  authStore.isAuthenticated = true;
+  authStore.token = response.data.data.token;
+
+  localStorage.setItem('token', response.data.data.token);
+
+  console.log('response', response);
+
+  await getProfile();
+  router.push('/');
+}
+
+async function getProfile() {
+  const response = await axios({
+    method: 'get',
+    url: 'http://localhost:3000/getProfile',
+    headers: {
+      Authorization: `Bearer ${authStore.token}`,
+    },
+  });
+
+  authStore.user = response.data;
+  console.log('response profile', response);
 }
 </script>
 
@@ -107,13 +144,13 @@ function submit() {
       </form>
       <p class="text-center text-sm text-gray-600">
         Don't have an account?
-        <a
-          href="/register"
+        <router-link
+          to="/register"
           class="text-blue-500 hover:text-blue-800"
           rel="noopener noreferrer"
-          target="_blank"
-          >Sign up now</a
         >
+          Sign up now
+        </router-link>
       </p>
     </div>
   </div>

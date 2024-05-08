@@ -19,25 +19,35 @@
           <MenuDropDown :items="healthInfoLinks" />
         </li>
       </ul>
-      <button class="logout-button">Log out</button>
+      <button
+        v-if="authStore.isAuthenticated"
+        @click="handleLogout"
+        class="logout-button"
+      >
+        Log out
+      </button>
+      <button v-else @click="handleLogin" class="logout-button">Log in</button>
     </nav>
   </header>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
-import MenuDropDown from './MenuDropDown.vue';
+import { ref } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
+import MenuDropDown from './MenuDropDown.vue'
+import useAuthStore from '@/stores/auth'
 
-const model = ref(null);
+const model = ref(null)
 
+const router = useRouter()
+const authStore = useAuthStore()
 const dashboardLinks = ref({
   title: 'Dashboard',
   links: [
     { linkTitle: 'Dashboard', href: '/' },
     { linkTitle: 'My Page', href: '/dashboard/my-page' },
   ],
-});
+})
 
 const diaryLinks = ref({
   title: 'Craving Diaries',
@@ -45,7 +55,7 @@ const diaryLinks = ref({
     { linkTitle: 'All Diaries', href: '/diary/all' },
     { linkTitle: 'New Diary', href: '/diary/new' },
   ],
-});
+})
 
 const vapeLogLinks = ref({
   title: 'Vape Log',
@@ -54,7 +64,7 @@ const vapeLogLinks = ref({
     { linkTitle: 'New Puff Log', href: '/vapelog/new-puff' },
     { linkTitle: 'New Vape Log', href: '/vapelog/new-vape' },
   ],
-});
+})
 
 const communityLinks = ref({
   title: 'Communities',
@@ -62,12 +72,24 @@ const communityLinks = ref({
     { linkTitle: 'All Posts', href: '/communities' },
     { linkTitle: 'New Post', href: '/communities/new' },
   ],
-});
+})
 
 const healthInfoLinks = ref({
   title: 'Health Info',
   links: [{ linkTitle: 'All', href: '/health' }],
-});
+})
+
+const handleLogout = () => {
+  console.log('logout')
+  authStore.$reset()
+  router.push('/')
+}
+
+const handleLogin = () => {
+  console.log('login')
+
+  router.push('/login')
+}
 </script>
 
 <style scoped>
