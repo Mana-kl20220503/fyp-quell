@@ -77,40 +77,46 @@
       </p>
     </div>
   </div>
+
+  <div class="calendar-container mb-10">
+    <v-calendar :attributes="attrs" class="v-calendar"></v-calendar>
+  </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import useAuthStore from '@/stores/auth'
-import axios from 'axios'
+import { ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import useAuthStore from '@/stores/auth';
+import axios from 'axios';
+import { Calendar as VCalendar } from 'v-calendar';
+import 'v-calendar/dist/style.css';
 
 const user = ref({
   name: 'User Name',
   profileImage: '/assets/User1.png',
   reasonToQuit: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-})
+});
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 
 const vapeLog = ref({
   puffs: 0,
   nicotine: 0,
   money: 0,
-})
+});
 
 const isAllZero = computed(() => {
   return (
     vapeLog.value.puffs === 0 &&
     vapeLog.value.nicotine === 0 &&
     vapeLog.value.money === 0
-  )
-})
+  );
+});
 
-const router = useRouter()
+const router = useRouter();
 
 function goToArticle() {
-  router.push('/health/article/1')
+  router.push('/health/article/1');
 }
 
 async function init() {
@@ -118,15 +124,15 @@ async function init() {
     const d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
-      year = d.getFullYear()
+      year = d.getFullYear();
 
-    return [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-')
+    return [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-');
   }
 
   try {
-    const startDate = new Date()
-    const endDate = new Date()
-    endDate.setDate(startDate.getDate() + 1)
+    const startDate = new Date();
+    const endDate = new Date();
+    endDate.setDate(startDate.getDate() + 1);
 
     const response = await axios({
       method: 'get',
@@ -138,17 +144,53 @@ async function init() {
         startDate: formatDate(startDate),
         endDate: formatDate(endDate),
       },
-    })
+    });
 
-    console.log('response from dashboard', response)
+    console.log('response from dashboard', response);
   } catch (error) {
-    console.error('Error fetching logs:', error)
+    console.error('Error fetching logs:', error);
   }
 }
 
 onMounted(() => {
-  init()
-})
+  init();
+});
+
+const staticAttrs = ref([
+  {
+    key: 'today',
+    highlight: {
+      backgroundColor: '#ff8080',
+    },
+    dates: new Date(),
+    popover: {
+      label: 'today is vape free day!',
+    },
+  },
+]);
+
+// sample data
+const puffsCountData = ref([
+  { date: new Date(2024, 4, 1), count: 0 },
+  { date: new Date(2024, 4, 2), count: 3 },
+  { date: new Date(2024, 4, 3), count: 5 },
+  { date: new Date(2024, 4, 4), count: 0 },
+]);
+
+const attrs = computed(() => {
+  const dynamicAttrs = puffsCountData.value.map((puff) => ({
+    key: `puffs-${puff.date.getDate()}`,
+    dates: puff.date,
+    highlight: {
+      backgroundColor: puff.count === 0 ? '#faa1ae' : '',
+    },
+    popover: {
+      label: `Puffs: ${puff.count}`,
+    },
+  }));
+
+  return [...staticAttrs.value, ...dynamicAttrs];
+});
 </script>
 
 <style scoped>
@@ -160,5 +202,12 @@ onMounted(() => {
 .custom-img {
   width: 160px; /* Set width */
   height: auto;
+}
+
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
 }
 </style>

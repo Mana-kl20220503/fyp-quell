@@ -36,6 +36,11 @@
         </div>
       </div>
 
+      <div class="mt-10">
+        <h1 class="text-center text-2xl font-ultra mb-4">Nicotine Log/week</h1>
+        <canvas id="myChart" style="width: 800px; height: 400px"></canvas>
+      </div>
+
       <div class="mt-10 w-full max-w-4xl">
         <h2 class="text-2xl font-ultra mb-4 text-center">
           Vape Purchase History
@@ -73,7 +78,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import Chart from 'chart.js/auto';
 
 const totalPuffs = ref(0);
 const nicotineIntake = ref(0);
@@ -127,6 +133,30 @@ function confirmPurchase(purchase) {
   console.log('Confirming', purchase);
   // Add confirm logic or API call to confirm the purchase
 }
+
+onMounted(() => {
+  const ctx = document.getElementById('myChart');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+      datasets: [
+        {
+          label: 'Nicotine intake (mg)',
+          data: [12, 19, 3, 5, 2, 3, 1],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+});
 </script>
 
 <style scoped>
