@@ -16,8 +16,9 @@ async function main() {
       password: hash,
       profile: {
         create: {
-          reasonToQuit: 'Health reasons',
-          imgUrl: 'alice.jpg',
+          reasonToQuit:
+            'I decided to quit vaping to improve my lung health and increase my overall fitness level.',
+          imgUrl: 'Alice.jbg',
           userName: 'Alice',
         },
       },
@@ -33,7 +34,7 @@ async function main() {
       profile: {
         create: {
           reasonToQuit: 'Costly habit',
-          imgUrl: 'bob.jpg',
+          imgUrl: 'Bob.jpg',
           userName: 'Bob',
         },
       },
@@ -60,38 +61,38 @@ async function main() {
   // Seed Vapes
   const vape = await prisma.vape.create({
     data: {
-      price: 49.99,
-      brand: 'VapeBrand',
+      price: 11,
+      brand: 'Crystal Pro',
       productType: 'Disposable',
-      nicotineContent: 50,
-      puffsCount: 500,
+      nicotineContent: 20,
+      puffsCount: 4000,
     },
   });
   const vape2 = await prisma.vape.create({
     data: {
-      price: 65,
+      price: 5,
       brand: 'Lost Mary',
       productType: 'Vape Kit',
-      nicotineContent: 70,
-      puffsCount: 700,
+      nicotineContent: 20,
+      puffsCount: 600,
     },
   });
   const vape3 = await prisma.vape.create({
     data: {
-      price: 15,
+      price: 7,
       brand: 'ELFBAR',
       productType: 'Pod',
-      nicotineContent: 25,
-      puffsCount: 250,
+      nicotineContent: 20,
+      puffsCount: 600,
     },
   });
   const vape4 = await prisma.vape.create({
     data: {
-      price: 20,
+      price: 8,
       brand: 'ELUX',
       productType: 'Pod',
-      nicotineContent: 18,
-      puffsCount: 180,
+      nicotineContent: 20,
+      puffsCount: 600,
     },
   });
 

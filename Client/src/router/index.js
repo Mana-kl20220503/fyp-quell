@@ -27,6 +27,7 @@ import VapeLogView from '@/views/VapeLog/VapeLogView.vue';
 import NewPuffLogView from '@/views/VapeLog/NewPuffLog.vue';
 import TodayLogView from '@/views/VapeLog/NewVapeLog.vue';
 import NewVapeLog from '@/views/VapeLog/NewVapeLog.vue';
+import Calender from '@/views/Dashboard/calender.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
       path: '/dashboard/my-page',
       name: 'mypage',
       component: MyPageView,
+    },
+    {
+      path: '/dashboard/calender',
+      name: 'calender',
+      component: Calender,
     },
     {
       path: '/communities',

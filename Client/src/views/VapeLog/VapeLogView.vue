@@ -36,8 +36,13 @@
         </div>
       </div>
 
+      <!-- <div class="mt-10">
+        <h1 class="text-center text-2xl font-ultra mb-4">Nicotine Log/day</h1>
+        <canvas id="chartRef" style="width: 800px; height: 400px"></canvas>
+      </div> -->
+
       <div class="mt-10">
-        <h1 class="text-center text-2xl font-ultra mb-4">Nicotine Log/week</h1>
+        <h1 class="text-center text-2xl font-ultra mb-4">Nicotine Log/day</h1>
         <canvas id="myChart" style="width: 800px; height: 400px"></canvas>
       </div>
 
@@ -80,7 +85,11 @@
 import { ref, computed, onMounted } from 'vue';
 import useAuthStore from '@/stores/auth';
 const authStore = useAuthStore();
-import Chart from 'chart.js/auto';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
+
+const nicotineData = ref([]);
+const chartRef = ref(null);
 
 const totalPuffs = ref(0);
 const nicotineIntake = ref(0);
@@ -116,24 +125,68 @@ function init() {
     .reduce((acc, item) => {
       return acc + parseFloat(item.nicotineIntake);
     }, 0)
-    .toFixed(2);
+    .toFixed(3);
 }
 onMounted(() => {
   init();
   totalPuffs.value = authStore.user.puffLog.length;
   purchases.value = authStore.user.purchaseLog;
+  const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+  // fetchNicotineData(today);
 });
+
+// async function fetchNicotineData(date) {
+//   try {
+//     const response = await axios.get(
+//       'http://localhost:3000/getDailyNicotineIntake',
+//       {
+//         params: { date: date },
+//         headers: { Authorization: `Bearer ${token}` },
+//       }
+//     );
+//     nicotineData.value = response.data;
+//     console.log('Fetched data:', nicotineData.value); // データをログ出力
+//     drawChart();
+//   } catch (error) {
+//     console.error('Failed to fetch nicotine data:', error);
+//   }
+// }
+
+// function drawChart() {
+//   const ctx = chartRef.value.getContext('2d');
+//   new Chart(ctx, {
+//     type: 'line',
+//     data: {
+//       labels: nicotineData.value.map((item) => item.period),
+//       datasets: [
+//         {
+//           label: 'Nicotine intake (mg)',
+//           data: nicotineData.value.map((item) => item.nicotineIntake),
+//           borderColor: 'rgb(75, 192, 192)',
+//           tension: 0.1,
+//         },
+//       ],
+//     },
+//     options: {
+//       scales: {
+//         y: {
+//           beginAtZero: true,
+//         },
+//       },
+//     },
+//   });
+// }
 
 onMounted(() => {
   const ctx = document.getElementById('myChart');
   new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
-      labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+      labels: ['0am', '3am', '6am', '9am', '12pm', '3pm', '6pm', '9pm'],
       datasets: [
         {
           label: 'Nicotine intake (mg)',
-          data: [12, 19, 3, 5, 2, 3, 1],
+          data: [12, 19, 3, 5, 2, 3, 1, 0],
           borderWidth: 1,
         },
       ],

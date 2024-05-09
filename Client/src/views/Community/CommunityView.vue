@@ -52,21 +52,19 @@ import { ref, onMounted } from 'vue';
 import useAuthStore from '@/stores/auth';
 import axios from 'axios';
 
-const image = [
-  { id: 'user1', text: 'Alice', image: '/assets/User2.png' },
-  { id: 'user2', text: 'Bob', image: '/assets/User3.png' },
-  { id: 'user3', text: 'Jack', image: '/assets/User3.png' },
-];
-
 const authStore = useAuthStore();
+
+const moodOptions = {
+  Alice: '/assets/User2.png',
+  Bob: '/assets/User3.png',
+  Jack: '/assets/User4.png',
+};
 
 async function getPosts() {
   const publicPosts = authStore.publicPosts.filter((e) => e.isPublic);
   posts.value = publicPosts.map((post) => {
-    const imgText = extractMood(post.author.profile[0].imgUrl);
-    const moodImage =
-      image.find((mood) => mood.text === imgText)?.image ||
-      post.author.profile[0].imgUrl;
+    const userName = post.author.profile[0].userName;
+    const moodImage = moodOptions[userName] || '/assets/default.png';
     return {
       ...post,
       author: {
@@ -85,12 +83,12 @@ async function getPosts() {
   console.log('posts', posts.value);
 }
 
-function extractMood(imgUrl) {
-  if (imgUrl.includes('alice')) return 'Alice';
-  if (imgUrl.includes('bob')) return 'Bob';
-  if (imgUrl.includes('jack')) return 'Jack';
-  return '';
-}
+// function extractMood(userName) {
+//   if (userName.includes('Alice')) return 'Alice';
+//   if (userName.includes('Bob')) return 'Bob';
+//   if (userName.includes('Jack')) return 'Jack';
+//   return '';
+// }
 
 function formatReadableDate(dateString) {
   const date = new Date(dateString);
@@ -158,6 +156,7 @@ async function getPublicPosts() {
 }
 
 onMounted(() => {
+  getPublicPosts();
   getPosts();
 });
 </script>

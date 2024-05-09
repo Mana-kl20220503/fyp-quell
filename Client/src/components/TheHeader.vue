@@ -66,7 +66,7 @@ const diaryLinks = ref({
 const vapeLogLinks = ref({
   title: 'Vape Log',
   links: [
-    { linkTitle: "Today's Log", href: '/vapelog' },
+    { linkTitle: 'Statistic', href: '/vapelog' },
     { linkTitle: 'New Puff Log', href: '/vapelog/new-puff' },
     { linkTitle: 'New Vape Log', href: '/vapelog/new-vape' },
   ],

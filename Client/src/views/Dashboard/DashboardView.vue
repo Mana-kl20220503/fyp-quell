@@ -78,10 +78,10 @@
         </p>
       </div>
     </div>
-  </div>
 
-  <div class="calendar-container mb-14">
-    <v-calendar :attributes="attrs" class="v-calendar"></v-calendar>
+    <div class="calendar-container mb-10 mt-10">
+      <v-calendar :attributes="attrs" class="v-calendar"></v-calendar>
+    </div>
   </div>
 </template>
 
@@ -96,6 +96,8 @@ import 'v-calendar/dist/style.css';
 const puffCount = ref(0);
 const nicotineTotal = ref(0);
 const moneySpent = ref(0);
+
+const dateGreg = [];
 
 // const user = ref({
 //   name: 'User Name',
@@ -222,6 +224,7 @@ async function computeTotalPuffs() {
       year = d.getFullYear();
     return [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-');
   }
+
   try {
     const startDate = new Date();
     const endDate = new Date();
@@ -237,22 +240,33 @@ async function computeTotalPuffs() {
         endDate: formatDate(endDate),
       },
     });
-    puffCount.value = response.data.length;
-    nicotineTotal.value = parseFloat(
-      response.data
+
+    console.log('API Response:', response.data); // APIからの応答内容をログに出力
+
+    // データ処理後の変数の状態をログ出力
+    if (response.data && response.data.length > 0) {
+      puffCount.value = response.data.length; // 合計のパフ数を更新
+      nicotineTotal.value = response.data
         .reduce((accumulator, item) => {
           return accumulator + parseFloat(item.nicotineIntake);
-        }, nicotineTotal.value)
-        .toFixed(2)
-    );
-    console.log('response from get today logs', response);
+        }, 0)
+        .toFixed(3); // ニコチン摂取量の合計を計算
+    } else {
+      puffCount.value = 0;
+      nicotineTotal.value = 0;
+      console.log('No data returned from API');
+    }
+
+    // 更新された値を確認
+    console.log('Puffs taken:', puffCount.value);
+    console.log('Total nicotine intake:', nicotineTotal.value);
   } catch (error) {
     console.error('Error fetching logs:', error);
   }
 }
 
 onMounted(() => {
-  // init();
+  init();
   updateProfile();
 });
 

@@ -362,6 +362,73 @@ app.post('/addPurchaseLog', async (req, res) => {
   res.send('Add Purchase Log');
 });
 
+//get daily nicotine
+// app.get('/getDailyNicotineIntake', async (req, res) => {
+//   const authHeader = req.headers['authorization'];
+//   if (!authHeader.startsWith('Bearer ')) {
+//     return res.status(401).send('No token provided');
+//   }
+
+//   const token = authHeader.substring(7); // 'Bearer 'を削除してトークンのみを抽出
+//   try {
+//     const payload = await VerifyToken(token);
+//     const userId = payload.id;
+//     const puffLogs = await prisma.puffLog.groupBy({
+//       by: ['hour'],
+//       _sum: {
+//         nicotineIntake: true,
+//       },
+//       where: {
+//         userId: userId, // userId が undefined でないことを確認
+//         createdAt: {
+//           gte: new Date(`${date}T00:00:00.000Z`),
+//           lt: new Date(`${date}T23:59:59.999Z`),
+//         },
+//       },
+//       orderBy: {
+//         hour: 'asc',
+//       },
+//       catch(error) {
+//         console.error('Error retrieving daily nicotine intake:', error);
+//         res.status(500).json({
+//           message: 'Error retrieving nicotine intake',
+//           error: error.message,
+//         });
+//       },
+//       catch(error) {
+//         return res.status(500).send(`Authentication error: ${error.message}`);
+//       },
+//     });
+
+//     // 時間帯に基づいてデータを整形
+//     const timePeriods = [
+//       '0am-3am',
+//       '3am-6am',
+//       '6am-9am',
+//       '9am-12pm',
+//       '12pm-3pm',
+//       '3pm-6pm',
+//       '6pm-9pm',
+//       '9pm-12am',
+//     ];
+//     const intakeByPeriod = timePeriods.map((period) => ({
+//       period: period,
+//       nicotineIntake: 0, // デフォルト値
+//     }));
+
+//     puffLogs.forEach((log) => {
+//       const hour = log.hour;
+//       const index = Math.floor(hour / 3);
+//       intakeByPeriod[index].nicotineIntake += log._sum.nicotineIntake;
+//     });
+
+//     res.json(intakeByPeriod);
+//   } catch (error) {
+//     console.error('Error retrieving daily nicotine intake:', error);
+//     res.status(500).send('Error retrieving nicotine intake');
+//   }
+// });
+
 app.use(authRouter);
 server.listen(3000, () =>
   console.log(`

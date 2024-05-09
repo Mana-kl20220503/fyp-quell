@@ -108,7 +108,7 @@ async function computeTotalPuffs() {
         .reduce((accumulator, item) => {
           return accumulator + parseFloat(item.nicotineIntake);
         }, nicotineTotal.value)
-        .toFixed(2)
+        .toFixed(3)
     );
     console.log('response from get today logs', response);
   } catch (error) {
