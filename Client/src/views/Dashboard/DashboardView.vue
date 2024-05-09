@@ -3,7 +3,7 @@
     <div class="flex flex-justify">
       <div class="text-center px-6">
         <img
-          :src="user.profileImage"
+          :src="authStore.user.profileImage"
           alt="User Image"
           class="w-20 h-20 rounded-full mx-auto"
         />
@@ -97,11 +97,11 @@ const puffCount = ref(0);
 const nicotineTotal = ref(0);
 const moneySpent = ref(0);
 
-const user = ref({
-  name: 'User Name',
-  profileImage: '/assets/User2.png',
-  reasonToQuit: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-});
+// const user = ref({
+//   name: 'User Name',
+//   profileImage: '/assets/User2.png',
+//   reasonToQuit: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+// });
 
 const authStore = useAuthStore();
 
@@ -112,6 +112,52 @@ const authStore = useAuthStore();
 //     vapeLog.value.money === 0
 //   );
 // });
+
+async function getProfile() {
+  const response = await axios({
+    method: 'get',
+    url: 'http://localhost:3000/getProfile',
+    headers: {
+      Authorization: `Bearer ${authStore.token}`,
+    },
+  });
+  console.log('response profile', response);
+  authStore.user = response.data;
+  authStore.user.profileImage = getUserImageUrl(
+    authStore.user.profile[0].userName
+  );
+}
+
+const user = ref({
+  name: '',
+  profileImage: '',
+  reasonToQuit: '',
+});
+
+async function updateProfile() {
+  await getProfile();
+  if (authStore.user.profile && authStore.user.profile.length > 0) {
+    const profile = authStore.user.profile[0];
+    user.value.name = profile.userName;
+    user.value.profileImage = profile.imgUrl;
+    user.value.reasonToQuit = profile.reasonToQuit;
+    console.log('Updated user state:', user.value);
+  } else {
+    console.error(
+      'Profile data is not in expected format or empty:',
+      authStore.user
+    );
+  }
+}
+
+function getUserImageUrl(userName) {
+  const moodMap = {
+    Alice: '/assets/User2.png',
+    Bob: '/assets/User3.png',
+    Jack: '/assets/User3.png',
+  };
+  return moodMap[userName] || '/assets/User3.png';
+}
 
 const router = useRouter();
 
@@ -206,7 +252,8 @@ async function computeTotalPuffs() {
 }
 
 onMounted(() => {
-  init();
+  // init();
+  updateProfile();
 });
 
 // const staticAttrs = ref([
