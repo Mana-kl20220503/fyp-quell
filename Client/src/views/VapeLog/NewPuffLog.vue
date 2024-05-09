@@ -27,12 +27,14 @@
     >
       Puff ↑
     </button>
-    <p class="text-center font-worksans mb-2">Today's Total Puffs</p>
-    <div class="bg-custom-red text-white text-2xl font-bold py-2 px-4 rounded">
+    <h1 class="text-center font-ultra mb-4 text-xl">Today's Total Puffs</h1>
+    <div
+      class="bg-custom-red text-white text-xl font-bold py-2 px-4 rounded mb-5"
+    >
       <p>{{ puffCount }}</p>
       <span>puffs 🚬</span>
     </div>
-    <div class="bg-custom-red text-white text-2xl font-bold py-2 px-4 rounded">
+    <div class="bg-custom-red text-white text-xl font-bold py-2 px-4 rounded">
       <p>{{ nicotineTotal }} mg</p>
       <span>nicotine 🚬</span>
     </div>

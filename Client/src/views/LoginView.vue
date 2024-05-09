@@ -62,7 +62,7 @@ async function submit() {
 
   console.log('response', response);
 
-  await getProfile();
+  await getPublicPosts();
   router.push('/');
 }
 
@@ -77,6 +77,15 @@ async function getProfile() {
 
   authStore.user = response.data;
   console.log('response profile', response);
+}
+
+async function getPublicPosts() {
+  const response = await axios({
+    method: 'get',
+    url: 'http://localhost:3000/publicPosts',
+  });
+  authStore.publicPosts = response.data;
+  console.log('response publicPosts', response);
 }
 </script>
 

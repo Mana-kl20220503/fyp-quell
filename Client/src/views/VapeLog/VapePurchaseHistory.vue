@@ -5,18 +5,6 @@
     <p>Vape Brand: {{ purchase.brand }}</p>
     <p>Number of items: {{ purchase.items }}</p>
     <p>Total Cost: £{{ purchase.cost }}</p>
-    <button
-      @click="edit"
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
-    >
-      Edit
-    </button>
-    <button
-      @click="confirm"
-      class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-    >
-      Confirm
-    </button>
   </div>
 </template>
 

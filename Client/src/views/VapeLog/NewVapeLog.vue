@@ -65,7 +65,7 @@
 
       <button
         type="submit"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        class="bg-custom-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
         Submit
       </button>
@@ -75,9 +75,11 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
 import useAuthStore from '@/stores/auth';
 
+const router = useRouter();
 const authStore = useAuthStore();
 const itemCount = ref(1);
 const isAware = ref(false);
@@ -104,8 +106,14 @@ async function submitForm() {
     },
   });
 
+  itemCount.value = 1;
+  isAware.value = false;
+  isEquivalent.value = false;
+  selectedBrand.value = null;
+
   await getProfile();
   console.log('response add purchase', response);
+  router.push('/vapelog');
 }
 
 async function getProfile() {

@@ -33,8 +33,16 @@ app.get('/getProfile', async (req, res) => {
     where: { id: user_id },
     include: {
       profile: true,
-      purchaseLog: true,
-      post: true,
+      purchaseLog: {
+        include: {
+          vape: true,
+        },
+      },
+      post: {
+        include: {
+          author: { include: { profile: true } },
+        },
+      },
       puffLog: true,
     },
   });
@@ -51,6 +59,20 @@ app.get('/getProfile', async (req, res) => {
   };
 
   res.status(200).send(response);
+});
+
+app.get('/publicPosts', async (req, res) => {
+  const posts = await prisma.post.findMany({
+    include: {
+      author: {
+        include: {
+          profile: true,
+        },
+      },
+    },
+  });
+
+  res.json(posts);
 });
 
 // Add Puff Log
@@ -216,6 +238,33 @@ app.post('/addDiary', async (req, res) => {
   res.send('Add Diary');
 });
 
+app.get('/getDiaries', async (req, res) => {
+  const authHeader = req.headers['authorization'];
+  const payload = await VerifyToken(authHeader);
+  const userId = payload.id;
+
+  console.log('userId', userId);
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  let whereClause = {
+    authorId: userId,
+    isPublic: false,
+  };
+
+  const diaries = await prisma.post.findMany({
+    where: whereClause,
+  });
+
+  res.json(diaries);
+});
+
 // Add Post
 app.post('/addPost', async (req, res) => {
   const authHeader = req.headers['authorization'];
@@ -243,6 +292,35 @@ app.post('/addPost', async (req, res) => {
   });
 
   res.send('Add Post');
+});
+
+// Like Post
+app.post('/likePost', async (req, res) => {
+  const { postId } = req.body;
+
+  if (!postId) {
+    return res.status(400).send('Post ID is required');
+  }
+
+  try {
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
+    });
+
+    if (!post) {
+      return res.status(404).send('Post not found');
+    }
+
+    const updatedPost = await prisma.post.update({
+      where: { id: postId },
+      data: { likes: post.likes + 1 },
+    });
+
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    console.error('Error liking the post:', error);
+    res.status(500).send('Error updating the post');
+  }
 });
 
 // Add Vape Log

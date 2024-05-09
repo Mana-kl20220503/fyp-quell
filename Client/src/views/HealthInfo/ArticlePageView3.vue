@@ -1,41 +1,81 @@
 <template>
   <article class="p-4 max-w-4xl mx-auto my-5 bg-white rounded shadow-lg">
-    <h1 class="text-2xl font-bold mb-3">Article Title 3</h1>
+    <h1 class="text-2xl font-bold mb-3">
+      RCSI research warns of hazardous health risks from flavoured vapes
+    </h1>
+    <div class="flex flex-col items-center">
+      <img
+        src="@/assets/article3_header.jpg"
+        alt="vape"
+        class="mx-1 my-1 rounded-lg w-[60vw]"
+      />
+    </div>
     <p class="mb-3">
-      This is the content of Article 3. Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Doloremque reiciendis sit nihil placeat qui dicta
-      similique neque maiores atque unde! Deleniti at mollitia numquam atque
-      nulla dolorem iusto porro magni, pariatur eligendi autem nesciunt
-      exercitationem! Numquam voluptatibus atque explicabo quam molestias id
-      blanditiis. Autem sunt, quos, aperiam soluta officia sit rem molestiae,
-      neque corrupti maxime ullam asperiores sint. Dignissimos, optio velit? Ab,
-      dicta? Commodi hic dolores debitis qui praesentium, incidunt explicabo
-      repellat. At saepe facilis modi suscipit corporis ea nemo sit veniam odio
-      amet est reiciendis nulla quaerat atque, quisquam iure unde molestias
-      expedita maiores officia quod voluptates. Sequi eius cum ducimus iste? Est
-      necessitatibus nemo blanditiis ipsam architecto placeat consequatur
-      nesciunt a, incidunt provident praesentium aliquid ad sint tempore
-      similique sequi quasi, animi minima! Iste nobis quo tempora ipsa
-      reprehenderit consequuntur, rerum quam unde dignissimos nemo, cum soluta
-      corporis! Omnis repellendus nobis eum molestiae ex? Laborum, dolorum
-      molestias! Provident nostrum architecto recusandae sunt aspernatur
-      excepturi aperiam, alias, nihil incidunt vel, in debitis harum! Sapiente
-      dolor maxime nobis cupiditate. A, voluptates? Optio corporis eius
-      blanditiis laborum provident distinctio accusamus, sunt quis voluptate
-      magni minima. Dolore, optio inventore sequi consectetur ipsum id voluptas
-      mollitia eaque exercitationem, culpa cum doloribus illum nulla atque eum
-      itaque incidunt consequuntur ut voluptatum! Adipisci ratione mollitia
-      minus molestiae perspiciatis, voluptatem alias asperiores cupiditate ea
-      consequuntur praesentium dolor unde nihil laboriosam cum expedita harum
-      quae dolores fuga? Numquam voluptatem reprehenderit consequuntur debitis
-      voluptatum qui quidem. Dignissimos amet natus, ipsam dolorum dicta
-      perspiciatis quod dolore, mollitia quae sapiente neque omnis enim
-      doloribus architecto, vel expedita. Obcaecati ipsam labore praesentium
-      quas nobis consequatur et fugit sapiente ad, perferendis deleniti, veniam
-      vel pariatur aut dolor minus quia similique animi beatae dicta molestiae
-      veritatis harum eveniet consectetur. Ratione eius amet quaerat deleniti
-      accusantium sequi, exercitationem similique unde molestiae sapiente,
-      obcaecati architecto!
+      <div class="font-bold">
+      New RCSI research has uncovered the potentially harmful substances that
+      are produced when e-liquids in vaping devices are heated for
+      inhalation.<br /><br /></div>
+
+      The study, published in Opens in new windowScientific Reports, highlights
+      the urgent need for public health policies concerning flavoured vapes.
+      <br /><br />
+
+      The research team in RCSI’s Department of Chemistry used artificial
+      intelligence (AI) to simulate the effects of heating e-liquid flavour
+      chemicals found in nicotine vapes. They included all 180 known e-liquid
+      flavour chemicals, predicting the new compounds formed when these
+      substances are heated within a vaping device immediately prior to
+      inhalation. <br /><br />
+
+      The analysis revealed the formation of many hazardous chemicals including
+      127 that are classified as ‘acute toxic’, 153 as ‘health hazards’ and 225
+      as ‘irritants’. Notably, these included a group of chemicals called
+      volatile carbonyls (VCs), which are known to pose health risks. Sources
+      for VCs were predicted to be the most popular fruit, candy and
+      dessert-flavoured products. <br /><br />
+
+      Lead author Professor Donal O’Shea, Professor of Chemistry and Head of
+      Department, said the findings are very concerning: “We wanted to
+      understand, before it’s too late, the likely impact flavoured vapes are
+      having on the health of the growing number of vapers. Our findings
+      indicate a significantly different profile of chemical hazards compared to
+      what we are familiar with from traditional tobacco smoking.<br /><br />
+
+      “It is plausible that we are on the cusp of a new wave of chronic diseases
+      that will emerge 15 to 20 years from now due to these exposures. We hope
+      this research will help people make more informed choices and contribute
+      to the conversation on the potential long-term health risks and the
+      regulation of vaping, which this research suggests should be
+      comprehensive.” <br /><br />
+
+      The study also highlighted the complexities introduced by the huge array
+      of flavours available in vaping products, which include 180 different
+      chemicals blended in various amounts. This cocktail of chemicals,
+      primarily derived from the food industry where they have a good safety
+      record for specific uses, were never intended to be heated to high
+      temperatures for inhalation. <br /><br />
+
+      As vaping devices vary widely and are often user-customised, the
+      temperature control and resulting chemical reactions can differ,
+      increasing the unpredictability of potential health risks. This
+      variability requires further research using the AI framework established
+      in this study, which could also lead to the development of risk reports
+      for individual flavours, providing an informative public health policy
+      resource. <br /><br />
+
+      Considering the popularity of flavoured vapes among non-smoking teenagers
+      and young adults, understanding the long-term effects of these products on
+      public health, morbidity and mortality is crucial. This study demonstrates
+      that without comprehensive regulation, as we try to treat the nicotine
+      addictions of older tobacco smokers, there is a substantial risk of
+      transferring new health issues to younger generations. <br /><br />
+
+      The research was carried out in conjunction with IBM Research – Tokyo and
+      was supported by Science Foundation Ireland (SFI) and the Irish Research
+      Council through the SFI-IRC Pathway Programme for Dr Dan Wu. Details are
+      published in the paper Opens in new window‘Forecasting vaping health risks
+      through neural network model prediction of flavour pyrolysis reactions’ in
+      Scientific Reports.
     </p>
     <!-- その他の記事内容 -->
   </article>

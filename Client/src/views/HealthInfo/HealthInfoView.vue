@@ -4,26 +4,23 @@
       Latest Health News
     </h2>
   </div>
-  <div class="container mx-auto px-40 py-8 font-worksans">
+  <div class="container mx-auto px-5 py-8 font-worksans w-4/5">
     <router-link to="/health/articles/1">
       <div
-        class="bg-white hover:bg-gray-300 active:bg-gray-400 rounded-lg overflow-hidden shadow-custom active:shadow-custom_active border border-black flex items-center transition-colors duration-300 cursor-pointer"
+        class="bg-white hover:bg-gray-300 active:bg-gray-400 rounded-lg overflow-hidden shadow-custom active:shadow-custom_active border border-black flex items-center transition-colors duration-300 cursor-pointer gap-4 mb-10"
       >
-        <div>
-          <img
-            src="@/assets/vape3.jpg"
-            alt="vape"
-            class="mx-1 my-1 rounded-lg"
-          />
-        </div>
-        <div class="mx-3">
-          <h5 class="font-bold">Vape is not good for your health</h5>
+        <img
+          src="@/assets/article1_header.jpg"
+          alt="vape"
+          class="rounded-lg w-1/3 h-auto max-h-40 object-cover"
+        />
+        <div class="flex flex-col mx-3 my-2">
+          <h5 class="font-bold">
+            Vapes '95% safer' than cigarettes messaging backfired
+          </h5>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor sunt
-            quaerat nostrum reprehenderit illum placeat quas quod ad culpa ea,
-            quisquam nesciunt iure facilis doloribus ex? Nobis sequi, excepturi
-            ullam consequuntur esse vel nisi voluptatum commodi, vitae rem
-            eligendi ea.
+            The message that vaping is 95% safer than smoking has backfired,
+            encouraging some children to vape, says a top health expert...
           </p>
         </div>
       </div>
@@ -31,23 +28,20 @@
 
     <router-link to="/health/articles/2">
       <div
-        class="bg-white hover:bg-gray-300 active:bg-gray-400 rounded-lg overflow-hidden shadow-custom active:shadow-custom_active border border-black flex items-center transition-colors duration-300 cursor-pointer mt-12"
+        class="bg-white hover:bg-gray-300 active:bg-gray-400 rounded-lg overflow-hidden shadow-custom active:shadow-custom_active border border-black flex items-center transition-colors duration-300 cursor-pointer gap-4 mb-10"
       >
-        <div>
-          <img
-            src="@/assets/smoke2.jpg"
-            alt="vape"
-            class="mx-1 my-1 rounded-lg"
-          />
-        </div>
-        <div class="mx-3">
-          <h5 class="font-bold">Vape is not good for your health</h5>
+        <img
+          src="@/assets/article2_header.jpg"
+          alt="vape"
+          class="rounded-lg w-1/3 h-auto max-h-40 object-cover"
+        />
+        <div class="flex flex-col mx-3 my-2">
+          <h5 class="font-bold">
+            Chemicals in vapes could be highly toxic when heated
+          </h5>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor sunt
-            quaerat nostrum reprehenderit illum placeat quas quod ad culpa ea,
-            quisquam nesciunt iure facilis doloribus ex? Nobis sequi, excepturi
-            ullam consequuntur esse vel nisi voluptatum commodi, vitae rem
-            eligendi ea.
+            Compounds produced by heating some fruit-flavoured vape liquids have
+            implications for lung and cardiovascular disease and cancer...
           </p>
         </div>
       </div>
@@ -55,23 +49,21 @@
 
     <router-link to="/health/articles/3">
       <div
-        class="bg-white hover:bg-gray-300 active:bg-gray-400 rounded-lg overflow-hidden shadow-custom active:shadow-custom_active border border-black flex items-center transition-colors duration-300 cursor-pointer mt-12"
+        class="bg-white hover:bg-gray-300 active:bg-gray-400 rounded-lg overflow-hidden shadow-custom active:shadow-custom_active border border-black flex items-center transition-colors duration-300 cursor-pointer gap-4"
       >
-        <div>
-          <img
-            src="@/assets/vape2.jpg"
-            alt="vape"
-            class="mx-1 my-1 rounded-lg"
-          />
-        </div>
-        <div class="mx-3">
-          <h5 class="font-bold">Vape is not good for your health</h5>
+        <img
+          src="@/assets/article3_header.jpg"
+          alt="vape"
+          class="rounded-lg w-1/3 h-auto max-h-40 object-cover"
+        />
+        <div class="flex flex-col mx-3 my-2">
+          <h5 class="font-bold">
+            RCSI research warns of hazardous health risks from flavoured
+          </h5>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor sunt
-            quaerat nostrum reprehenderit illum placeat quas quod ad culpa ea,
-            quisquam nesciunt iure facilis doloribus ex? Nobis sequi, excepturi
-            ullam consequuntur esse vel nisi voluptatum commodi, vitae rem
-            eligendi ea.
+            New RCSI research has uncovered the potentially harmful substances
+            that are produced when e-liquids in vaping devices are heated for
+            inhalation...
           </p>
         </div>
       </div>

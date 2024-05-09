@@ -20,6 +20,7 @@
           <h2 class="font-bold">Nicotine Intake</h2>
           <p class="py-4 text-5xl">{{ nicotineIntake }} mg</p>
           <p>
+            Vapes '95% safer' than cigarettes messaging backfired
             <a href="/health" class="underline text-yellow-200">
               Learn more -- Click
             </a>
@@ -44,32 +45,31 @@
         <h2 class="text-2xl font-ultra mb-4 text-center">
           Vape Purchase History
         </h2>
-        <div
-          v-for="purchase in purchases"
-          :key="purchase.id"
-          class="bg-white p-4 my-2 rounded shadow-md flex justify-between items-center"
-        >
-          <div class="flex flex-justify">
-            <p>{{ purchase.date }}</p>
-            <p>Type of Vape: {{ purchase.type }}</p>
-            <p>Vape Brand: {{ purchase.brand }}</p>
-            <p>Number of items: {{ purchase.items }}</p>
-            <p>Total Cost: £{{ purchase.cost }}</p>
-          </div>
-          <div>
-            <button
-              @click="editPurchase(purchase)"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
-            >
-              Edit
-            </button>
-            <button
-              @click="confirmPurchase(purchase)"
-              class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-            >
-              Confirm
-            </button>
-          </div>
+        <div>
+          <table class="min-w-full bg-white">
+            <thead>
+              <tr class="w-full bg-custom-yellow text-left">
+                <th class="p-4">Date</th>
+                <th class="p-4">Type of Vape</th>
+                <th class="p-4">Vape Brand</th>
+                <th class="p-4">Number of Items</th>
+                <th class="p-4">Total Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="purchase in purchases"
+                :key="purchase.id"
+                class="my-2 rounded shadow-md"
+              >
+                <td class="p-4">{{ purchase.createdAt }}</td>
+                <td class="p-4">{{ purchase.vape.productType }}</td>
+                <td class="p-4">{{ purchase.vape.brand }}</td>
+                <td class="p-4">{{ purchase.quantity }}</td>
+                <td class="p-4">£{{ purchase.totalCost }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -95,25 +95,7 @@ const whatYouCouldBuy = computed(() => {
   }
 });
 
-const purchases = ref([
-  {
-    id: 1,
-    date: 'Month Date, 2024 00:00',
-    type: 'Disposable Vape',
-    brand: 'Brand A',
-    items: 3,
-    cost: 120,
-  },
-  {
-    id: 2,
-    date: 'Month Date, 2024 00:00',
-    type: 'Refillable Vape',
-    brand: 'Brand B',
-    items: 2,
-    cost: 150,
-  },
-  // More purchases can be added here
-]);
+const purchases = ref([]);
 
 function editPurchase(purchase) {
   console.log('Editing', purchase);
@@ -129,9 +111,17 @@ function init() {
   moneySpent.value = authStore.user.purchaseLog.reduce((acc, item) => {
     return acc + parseInt(item.totalCost);
   }, 0);
+
+  nicotineIntake.value = authStore.user.puffLog
+    .reduce((acc, item) => {
+      return acc + parseFloat(item.nicotineIntake);
+    }, 0)
+    .toFixed(2);
 }
 onMounted(() => {
   init();
+  totalPuffs.value = authStore.user.puffLog.length;
+  purchases.value = authStore.user.purchaseLog;
 });
 
 onMounted(() => {

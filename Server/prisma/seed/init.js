@@ -1,12 +1,12 @@
-import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcryptjs'
-const prisma = new PrismaClient()
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+const prisma = new PrismaClient();
 
 async function main() {
   // Seed Users
 
-  var salt = bcrypt.genSaltSync(10)
-  var hash = bcrypt.hashSync('qwe123', salt)
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync('qwe123', salt);
 
   const userAlice = await prisma.user.upsert({
     where: { email: 'alice@example.com' },
@@ -17,12 +17,12 @@ async function main() {
       profile: {
         create: {
           reasonToQuit: 'Health reasons',
-          imgUrl: 'https://example.com/alice.jpg',
+          imgUrl: 'alice.jpg',
           userName: 'Alice',
         },
       },
     },
-  })
+  });
 
   const userBob = await prisma.user.upsert({
     where: { email: 'bob@example.com' },
@@ -33,12 +33,12 @@ async function main() {
       profile: {
         create: {
           reasonToQuit: 'Costly habit',
-          imgUrl: 'https://example.com/bob.jpg',
+          imgUrl: 'bob.jpg',
           userName: 'Bob',
         },
       },
     },
-  })
+  });
 
   // Seed Posts
   await prisma.post.create({
@@ -47,7 +47,7 @@ async function main() {
       isPublic: true,
       authorId: userAlice.id,
     },
-  })
+  });
 
   await prisma.post.create({
     data: {
@@ -55,7 +55,7 @@ async function main() {
       isPublic: true,
       authorId: userBob.id,
     },
-  })
+  });
 
   // Seed Vapes
   const vape = await prisma.vape.create({
@@ -66,7 +66,7 @@ async function main() {
       nicotineContent: 50,
       puffsCount: 500,
     },
-  })
+  });
   const vape2 = await prisma.vape.create({
     data: {
       price: 65,
@@ -75,7 +75,7 @@ async function main() {
       nicotineContent: 70,
       puffsCount: 700,
     },
-  })
+  });
   const vape3 = await prisma.vape.create({
     data: {
       price: 15,
@@ -84,7 +84,7 @@ async function main() {
       nicotineContent: 25,
       puffsCount: 250,
     },
-  })
+  });
   const vape4 = await prisma.vape.create({
     data: {
       price: 20,
@@ -93,7 +93,7 @@ async function main() {
       nicotineContent: 18,
       puffsCount: 180,
     },
-  })
+  });
 
   // Seed PuffLogs
   await prisma.puffLog.create({
@@ -102,7 +102,7 @@ async function main() {
       vapeId: vape.id,
       userId: userAlice.id,
     },
-  })
+  });
 
   // Seed PurchaseLogs
   await prisma.purchaseLog.create({
@@ -120,17 +120,17 @@ async function main() {
         },
       },
     },
-  })
+  });
 
-  console.log('Seed data created!')
+  console.log('Seed data created!');
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

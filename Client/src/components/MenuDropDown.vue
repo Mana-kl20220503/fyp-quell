@@ -24,7 +24,7 @@
             <MenuItem v-for="item in items.links" v-slot="{ active }">
               <router-link
                 :class="[
-                  active ? 'bg-violet-500 text-white' : 'text-gray-900',
+                  active ? 'bg-custom-red text-white' : 'text-gray-900',
                   'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                 ]"
                 :to="item.href"
