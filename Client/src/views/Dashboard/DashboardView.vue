@@ -86,7 +86,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import useAuthStore from '@/stores/auth';
 import axios from 'axios';
@@ -97,23 +97,7 @@ const puffCount = ref(0);
 const nicotineTotal = ref(0);
 const moneySpent = ref(0);
 
-const dateGreg = [];
-
-// const user = ref({
-//   name: 'User Name',
-//   profileImage: '/assets/User2.png',
-//   reasonToQuit: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-// });
-
 const authStore = useAuthStore();
-
-// const isAllZero = computed(() => {
-//   return (
-//     vapeLog.value.puffs === 0 &&
-//     vapeLog.value.nicotine === 0 &&
-//     vapeLog.value.money === 0
-//   );
-// });
 
 async function getProfile() {
   const response = await axios({
@@ -241,23 +225,21 @@ async function computeTotalPuffs() {
       },
     });
 
-    console.log('API Response:', response.data); // APIからの応答内容をログに出力
+    console.log('API Response:', response.data);
 
-    // データ処理後の変数の状態をログ出力
     if (response.data && response.data.length > 0) {
-      puffCount.value = response.data.length; // 合計のパフ数を更新
+      puffCount.value = response.data.length;
       nicotineTotal.value = response.data
         .reduce((accumulator, item) => {
           return accumulator + parseFloat(item.nicotineIntake);
         }, 0)
-        .toFixed(3); // ニコチン摂取量の合計を計算
+        .toFixed(3);
     } else {
       puffCount.value = 0;
       nicotineTotal.value = 0;
       console.log('No data returned from API');
     }
 
-    // 更新された値を確認
     console.log('Puffs taken:', puffCount.value);
     console.log('Total nicotine intake:', nicotineTotal.value);
   } catch (error) {
@@ -270,41 +252,41 @@ onMounted(() => {
   updateProfile();
 });
 
-// const staticAttrs = ref([
-//   {
-//     key: 'today',
-//     highlight: {
-//       backgroundColor: '#ff8080',
-//     },
-//     dates: new Date(),
-//     popover: {
-//       label: 'today is vape free day!',
-//     },
-//   },
-// ]);
+const staticAttrs = ref([
+  {
+    key: 'today',
+    highlight: {
+      backgroundColor: '#ff8080',
+    },
+    dates: new Date(),
+    popover: {
+      label: 'today is vape free day!',
+    },
+  },
+]);
 
-// // sample data
-// const puffsCountData = ref([
-//   { date: new Date(2024, 4, 1), count: 0 },
-//   { date: new Date(2024, 4, 2), count: 3 },
-//   { date: new Date(2024, 4, 3), count: 5 },
-//   { date: new Date(2024, 4, 4), count: 0 },
-// ]);
+// sample data
+const puffsCountData = ref([
+  { date: new Date(2024, 4, 1), count: 0 },
+  { date: new Date(2024, 4, 2), count: 3 },
+  { date: new Date(2024, 4, 3), count: 5 },
+  { date: new Date(2024, 4, 4), count: 0 },
+]);
 
-// const attrs = computed(() => {
-//   const dynamicAttrs = puffsCountData.value.map((puff) => ({
-//     key: `puffs-${puff.date.getDate()}`,
-//     dates: puff.date,
-//     highlight: {
-//       backgroundColor: puff.count === 0 ? '#faa1ae' : '',
-//     },
-//     popover: {
-//       label: `Puffs: ${puff.count}`,
-//     },
-//   }));
+const attrs = computed(() => {
+  const dynamicAttrs = puffsCountData.value.map((puff) => ({
+    key: `puffs-${puff.date.getDate()}`,
+    dates: puff.date,
+    highlight: {
+      backgroundColor: puff.count === 0 ? '#faa1ae' : '',
+    },
+    popover: {
+      label: `Puffs: ${puff.count}`,
+    },
+  }));
 
-//   return [...staticAttrs.value, ...dynamicAttrs];
-// });
+  return [...staticAttrs.value, ...dynamicAttrs];
+});
 </script>
 
 <style scoped>

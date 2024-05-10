@@ -85,11 +85,7 @@
 import { ref, computed, onMounted } from 'vue';
 import useAuthStore from '@/stores/auth';
 const authStore = useAuthStore();
-import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
-
-const nicotineData = ref([]);
-const chartRef = ref(null);
+import Chart from 'chart.js/auto';
 
 const totalPuffs = ref(0);
 const nicotineIntake = ref(0);
@@ -131,51 +127,7 @@ onMounted(() => {
   init();
   totalPuffs.value = authStore.user.puffLog.length;
   purchases.value = authStore.user.purchaseLog;
-  const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-  // fetchNicotineData(today);
 });
-
-// async function fetchNicotineData(date) {
-//   try {
-//     const response = await axios.get(
-//       'http://localhost:3000/getDailyNicotineIntake',
-//       {
-//         params: { date: date },
-//         headers: { Authorization: `Bearer ${token}` },
-//       }
-//     );
-//     nicotineData.value = response.data;
-//     console.log('Fetched data:', nicotineData.value); // データをログ出力
-//     drawChart();
-//   } catch (error) {
-//     console.error('Failed to fetch nicotine data:', error);
-//   }
-// }
-
-// function drawChart() {
-//   const ctx = chartRef.value.getContext('2d');
-//   new Chart(ctx, {
-//     type: 'line',
-//     data: {
-//       labels: nicotineData.value.map((item) => item.period),
-//       datasets: [
-//         {
-//           label: 'Nicotine intake (mg)',
-//           data: nicotineData.value.map((item) => item.nicotineIntake),
-//           borderColor: 'rgb(75, 192, 192)',
-//           tension: 0.1,
-//         },
-//       ],
-//     },
-//     options: {
-//       scales: {
-//         y: {
-//           beginAtZero: true,
-//         },
-//       },
-//     },
-//   });
-// }
 
 onMounted(() => {
   const ctx = document.getElementById('myChart');
