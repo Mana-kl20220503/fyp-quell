@@ -138,7 +138,7 @@ onMounted(() => {
       datasets: [
         {
           label: 'Nicotine intake (mg)',
-          data: [12, 19, 3, 5, 2, 3, 1, 0],
+          data: [0.12, 0.19, 0.03, 0.05, 0.02, 0.03, 0.01, 0],
           borderWidth: 1,
         },
       ],
@@ -147,6 +147,10 @@ onMounted(() => {
       scales: {
         y: {
           beginAtZero: true,
+          ticks: {
+            stepSize: 0.1, // Specifies the interval between ticks
+            max: 1, // Sets the maximum value of the scale
+          },
         },
       },
     },
